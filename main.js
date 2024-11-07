@@ -1,24 +1,35 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const canvas = document.getElementById("drawingCanvas");
+const ctx = canvas.getContext("2d");
 
-setupCounter(document.querySelector('#counter'))
+let isDrawing = false;
+let startX, startY;
+
+canvas.addEventListener("mousedown", (event) => {
+  isDrawing = true;
+  [startX, startY] = [event.offsetX, event.offsetY];
+});
+
+canvas.addEventListener("mousemove", (event) => {
+  if (!isDrawing) return;
+  const [currentX, currentY] = [event.offsetX, event.offsetY];
+  ctx.beginPath();
+  ctx.moveTo(startX, startY);
+  ctx.lineTo(currentX, currentY);
+  ctx.stroke();
+  [startX, startY] = [currentX, currentY];
+});
+
+canvas.addEventListener("mouseup", () => {
+  isDrawing = false;
+});
+
+canvas.addEventListener("mouseout", () => {
+  isDrawing = false;
+});
+
+document.getElementById("clearCanvas").addEventListener("click", () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
