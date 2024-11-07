@@ -1,4 +1,4 @@
-import './style.css'
+import './style.css';
 
 const canvas = document.getElementById("drawingCanvas");
 const ctx = canvas.getContext("2d");
@@ -6,19 +6,27 @@ const ctx = canvas.getContext("2d");
 let isDrawing = false;
 let startX, startY;
 
+// Get canvas offset to adjust coordinates
+const canvasOffset = canvas.getBoundingClientRect();
+
 canvas.addEventListener("mousedown", (event) => {
   isDrawing = true;
-  [startX, startY] = [event.offsetX, event.offsetY];
+  startX = event.clientX - canvasOffset.left;
+  startY = event.clientY - canvasOffset.top;
 });
 
 canvas.addEventListener("mousemove", (event) => {
   if (!isDrawing) return;
-  const [currentX, currentY] = [event.offsetX, event.offsetY];
+  const currentX = event.clientX - canvasOffset.left;
+  const currentY = event.clientY - canvasOffset.top;
+  
   ctx.beginPath();
   ctx.moveTo(startX, startY);
   ctx.lineTo(currentX, currentY);
   ctx.stroke();
-  [startX, startY] = [currentX, currentY];
+  
+  startX = currentX;
+  startY = currentY;
 });
 
 canvas.addEventListener("mouseup", () => {
@@ -32,4 +40,3 @@ canvas.addEventListener("mouseout", () => {
 document.getElementById("clearCanvas").addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
-
