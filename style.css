@@ -1,3 +1,10 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   display: flex;
@@ -6,11 +13,32 @@ body {
   margin-top: 20px;
 }
 
+/* Canvas Styling */
 canvas {
-  border: 1px solid #000;
+  border: 2px solid #333;
+  width: 800px; /* Increased canvas width */
+  height: 600px; /* Increased canvas height */
   cursor: crosshair;
+  background-color: #f5f5f5; /* Light gray background for visibility */
 }
 
+/* Controls Section */
 .controls {
   margin-bottom: 10px;
+}
+
+/* Clear Button Styling */
+#clearCanvas {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  background-color: #007bff; /* Blue background color */
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#clearCanvas:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }
